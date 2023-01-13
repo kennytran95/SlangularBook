@@ -40,3 +40,16 @@
   align-items: flex-end;
   padding: 10px;
 }
+
+.edit-del-buttons {
+  border: none;
+  outline: none;
+  border-radius: 5rem;
+  padding: 10px;
+  background-color: transparent;
+  transition: all 200ms ease-in-out;
+}
+
+.edit-del-buttons:hover {
+  box-shadow: rgb(74, 152, 255) 0px 0px 4px;
+}
