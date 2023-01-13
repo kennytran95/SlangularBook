@@ -1,0 +1,17 @@
+<form (submit)="addWord()">
+  <input
+    type="text"
+    name="name"
+    placeholder="Word"
+    class="form-entry"
+    [(ngModel)]="nameInput"
+  />
+  <input
+    type="text"
+    name="definition"
+    placeholder="Definition"
+    class="form-entry"
+    [(ngModel)]="definitionInput"
+  />
+  <button type="submit" class="submit">Add Word</button>
+</form>

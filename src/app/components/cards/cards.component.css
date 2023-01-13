@@ -1,0 +1,42 @@
+.cards-section {
+  margin: 1rem;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+}
+
+.card {
+  box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
+  border-radius: 10px;
+  width: 200px;
+  padding: 1rem;
+  margin: 1rem;
+  border: solid 2px transparent;
+  transition: 250ms all ease-in-out;
+}
+
+.card:hover {
+  border: solid 2px rgb(74, 152, 255);
+}
+
+.name {
+  font-size: 2rem;
+  text-transform: capitalize;
+}
+
+.id {
+  color: darkgray;
+  font-size: 0.75rem;
+}
+
+.def {
+  font-size: 0.9rem;
+}
+
+.button-cont {
+  /* border: solid 1px red; */
+  display: flex;
+  justify-content: space-around;
+  align-items: flex-end;
+  padding: 10px;
+}

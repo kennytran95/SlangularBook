@@ -1,0 +1,13 @@
+<section class="cards-section">
+  <div *ngFor="let slang of slangData" class="card">
+    <h3 class="name">{{ slang.name }}</h3>
+    <p class="id">ID: {{ slang.id }}</p>
+    <p class="def">{{ slang.definition }}</p>
+    <div class="button-cont">
+      <button class="edit-del-buttons">🖊</button>
+      <button (click)="deleteWord(slang.id)" class="edit-del-buttons">
+        ❌
+      </button>
+    </div>
+  </div>
+</section>
