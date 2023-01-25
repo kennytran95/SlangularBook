@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
-import { firstValueFrom } from 'rxjs';
+import { SlangsService } from 'src/app/services/slangs.service';
+// import { HttpClient } from '@angular/common/http';
+// import { firstValueFrom } from 'rxjs';
 
 @Component({
   selector: 'app-form',
@@ -8,9 +9,7 @@ import { firstValueFrom } from 'rxjs';
   styleUrls: ['./form.component.css'],
 })
 export class FormComponent {
-  constructor(private http: HttpClient) {}
-
-  url: string = 'http://localhost:5016/api/word';
+  constructor(private slangService: SlangsService) {}
 
   nameInput: string = '';
   definitionInput: string = '';
@@ -22,9 +21,10 @@ export class FormComponent {
       definition: this.definitionInput,
       slang: this.isSlang,
     };
-    await firstValueFrom(this.http.post(this.url, data)).then((result) => {
-      console.log(result);
-    });
+    this.slangService.postSlangData(data).subscribe(() => {});
+    // await firstValueFrom(this.http.post(this.url, data)).then((result) => {
+    //   console.log(result);
+    // });
     this.nameInput = '';
     this.definitionInput = '';
   }

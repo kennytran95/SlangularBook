@@ -1,8 +1,8 @@
-import { Component } from '@angular/core';
-import { take } from 'rxjs';
+import { Component, ɵɵsetComponentScope } from '@angular/core';
+import { BehaviorSubject, take } from 'rxjs';
 import { SlangsService } from 'src/app/services/slangs.service';
 import { HttpClient } from '@angular/common/http';
-import { firstValueFrom } from 'rxjs';
+import { firstValueFrom, switchMap } from 'rxjs';
 
 @Component({
   selector: 'app-cards',
@@ -10,25 +10,43 @@ import { firstValueFrom } from 'rxjs';
   styleUrls: ['./cards.component.css'],
 })
 export class CardsComponent {
-  constructor(private slangService: SlangsService, private http: HttpClient) {}
+  constructor(private slangService: SlangsService) {}
 
   url: string = 'http://localhost:5016/api/word';
+  slangData$: any; //use $ for observables
+  refreshWords = new BehaviorSubject<boolean>(true);
 
-  ngOnInit(): void {
-    this.slangService
-      .getSlangData()
-      .pipe(take(1))
-      .subscribe((slangData: any) => {
-        this.slangData = slangData;
-      });
+  public async ngOnInit(): Promise<void> {
+    this.fetchWords();
+    this.slangService.WordAdded.subscribe(() => {
+      this.fetchWords();
+    });
+    // this.slangService.getSlangData().subscribe((slangData: any) => {
+    //   this.slangData = slangData;
+    // });
+    // this.slangData = this.refreshWords.pipe(
+    //   switchMap(() => this.slangService.getSlangData())
+    // );
   }
-  slangData: any;
+
+  fetchWords() {
+    console.log('Fetching Data...');
+    this.slangService.getSlangData().subscribe((slangData: any) => {
+      this.slangData$ = slangData;
+    });
+  }
 
   async deleteWord(id: number) {
-    await firstValueFrom(this.http.delete(this.url + `/${id}`)).then(
-      (result) => {
-        console.log(result);
-      }
-    );
+    this.slangService.deleteSlangData(id).subscribe((res) => {
+      console.log(res);
+      this.ngOnInit();
+    });
+    // await firstValueFrom(this.http.delete(this.url + `/${id}`)).then(
+    //   (result) => {
+    //     console.log(result);
+    //     this.ngOnInit();
+    //     // this.refreshWords.next(true);
+    //   }
+    // );
   }
 }
